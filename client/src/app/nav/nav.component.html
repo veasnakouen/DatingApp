@@ -1,1 +1,38 @@
-<p>nav works!</p>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container">
+    <!-- <div class="container-fluid"> -->
+      <a class="navbar-brand" href="#">Dating App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">Matches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">Messages</a>
+          </li>
+        </ul>
+        <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off" role="search">
+          <!-- [(ngModel)] = "binding"  this is the structure,what we need for twoway binding,(call bananna in the box)
+          becouse of the round bracket in the square bracket
+          "[]" square bracket using for recieving from the component and parentheses are use
+          when data go away -->
+          <input
+          name = "username"
+          [(ngModel)] = "model.username"
+           class="form-control me-2" type="text" placeholder="Username">
+          <input
+          name="password"
+          [(ngModel)] = "model.password"
+          class="form-control me-2" type="password" placeholder="Password">
+          <button class="btn btn-outline-success" type="submit">Login</button>
+        </form>
+      </div>
+    <!-- </div> -->
+  </div>
+</nav>
