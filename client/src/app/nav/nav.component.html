@@ -6,7 +6,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="currentUser$|async">
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="#">Matches</a>
           </li>
@@ -16,8 +16,38 @@
           <li class="nav-item">
             <a class="nav-link">Messages</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Logout</a>
+          </li>
         </ul>
-        <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off" role="search">
+
+        <div class="dropdown" *ngIf="currentUser$|async" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle style="text-decoration: none;">Wellcome User:</a>
+          <div class="dropdown-menu mt-3" *dropdownMenu>
+            <a class="dropdown-item" >Edite Profile </a>
+            <div class="divider dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()">Logout</a>
+          </div>
+        </div>
+        <!-- <div class="btn-group" dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                  aria-controls="dropdown-basic">
+            Button dropdown <span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+              role= "menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="d                                                                                       ropdown-item" href="#">Action</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+            </li>
+          </ul>
+        </div> -->
+
+        <!-- we replace currentUer$|async  with-->
+        <!-- <form *ngIf="!loggedIn" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off" role="search"> -->
+          <form *ngIf="(currentUser$|async)===null" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off" role="search">
           <!-- [(ngModel)] = "binding"  this is the structure,what we need for twoway binding,(call bananna in the box)
           becouse of the round bracket in the square bracket
           "[]" square bracket using for recieving from the component and parentheses are use
@@ -25,7 +55,8 @@
           <input
           name = "username"
           [(ngModel)] = "model.username"
-           class="form-control me-2" type="text" placeholder="Username">
+           class="form-control me-2"
+            type="text" placeholder="Username">
           <input
           name="password"
           [(ngModel)] = "model.password"

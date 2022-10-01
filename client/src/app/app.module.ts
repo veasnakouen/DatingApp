@@ -7,11 +7,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './nav/nav.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    HomeComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     NgbModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

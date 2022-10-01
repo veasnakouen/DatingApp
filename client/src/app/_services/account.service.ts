@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
+import {map}from 'rxjs/operators';
+import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +13,32 @@ export class AccountService {
 //  the data that we store in the service doesn't destroy untill we close down
 // component difference when we move from a component to component,they are destroy as soon as they're not use
   baseUrl = 'https://localhost:5001/api/'
-  constructor(private http:HttpClient) { }
+  //ReplaySubjec : a kind of observeable
+
+  private currentUserSource = new ReplaySubject<User>(1);//this mean we want to store one(current user) in the localstrage
+  currentUser$ = this.currentUserSource.asObservable();
+
+
+  constructor(private http:HttpClient) {}
 
   login(model:any){
-    return this.http.post(this.baseUrl + 'account/login',model);
+    return this.http.post(this.baseUrl + 'account/login',model).pipe(
+      map((response:User) =>{
+        const user =  response;
+        if(user){
+          localStorage.setItem('user',JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    );
+  }
+setCurrentUser(user:User){
+  this.currentUserSource.next(user);
+}
+
+
+  logout(){
+    localStorage.removeItem('user');
+    this.currentUserSource.next(null);
   }
 }
