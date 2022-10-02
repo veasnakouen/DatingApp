@@ -1,5 +1,7 @@
 import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
@@ -15,7 +17,7 @@ export class NavComponent implements OnInit {
   // loggedIn:boolean;
   currentUser$:Observable<User>;
 
-  constructor(private accountService:AccountService) { }
+  constructor(private accountService:AccountService,private router:Router,private toastr:ToastrService) { }
   //we also can user accountService Directly without assign to currentUser$
   //by using *public* keyword infront of the service*accountService
   //then in template we call=> accountService.currentUser$
@@ -28,12 +30,15 @@ export class NavComponent implements OnInit {
     this.accountService.login(this.model).subscribe(response=>
       {
         // this.loggedIn = true;
+        this.router.navigateByUrl('/members');
       },error=>{
+        this.toastr.error(error.error);
         console.log(error);
       });
   }
   logout(){
     this.accountService.logout();
+    this.router.navigateByUrl('/');
       // this.loggedIn = false;
   }
   // getCurrentUser(){
