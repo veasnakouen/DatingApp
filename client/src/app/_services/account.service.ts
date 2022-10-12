@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { UrlSerializer } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import {map}from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -13,7 +14,8 @@ export class AccountService {
 //  2.service are singleton
 //  the data that we store in the service doesn't destroy untill we close down
 // component difference when we move from a component to component,they are destroy as soon as they're not use
-  baseUrl = 'https://localhost:5001/api/';
+  // baseUrl = 'https://localhost:5001/api/';
+baseUrl = environment.apiUrl;
   //ReplaySubjec : a kind of observeable
 
   private currentUserSource = new ReplaySubject<User>(1);//this mean we want to store one(current user) in the localstrage
