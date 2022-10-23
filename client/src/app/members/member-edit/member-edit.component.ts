@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
@@ -16,6 +16,12 @@ export class MemberEditComponent implements OnInit {
   @ViewChild('editForm') editForm:NgForm;
   member:Member;
   user:User;
+  @HostListener('window:beforeunload',['$event'])unloadNotification($event:any){
+    // this one for alert when close or chang out side the angular app
+    if(this.editForm.dirty){
+      $event.returnValue = true;
+    }
+  }
 
   constructor(private accountService:AccountService,
     private memberService:MembersService,
@@ -33,8 +39,12 @@ export class MemberEditComponent implements OnInit {
     })
   }
   updateMember(){
-    console.log(this.member);
-    this.toastr.success("update successfully!");
-    this.editForm.reset(this.member);
+    // console.log(this.member);
+
+    this.memberService.updateMember(this.member).subscribe(()=>{
+      this.toastr.success('Profile Update Successfully!');
+      this.editForm.reset(this.member);
+      })
+
   }
 }

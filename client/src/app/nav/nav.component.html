@@ -26,28 +26,14 @@
         </ul>
 
         <div class="dropdown" *ngIf="(currentUser$|async) as user" dropdown>
-          <a class="dropdown-toggle text-light" dropdownToggle style="text-decoration: none;">Wellcome {{user.username | titlecase}}:</a>
+          <img src="{{user.photoUrl||'./assets/user.png' }}" alt="{{user.username}}" class="img">
+          <a class="dropdown-toggle text-light" dropdownToggle style="text-decoration: none;">&nbsp; Wellcome {{user.knownAs | titlecase}}:</a>
           <div class="dropdown-menu mt-3" *dropdownMenu>
             <a routerLink="/member/edit" class="dropdown-item" >Edite Profile </a>
             <div class="divider dropdown-divider"></div>
             <a class="dropdown-item" (click)="logout()">Logout</a>
           </div>
         </div>
-        <!-- <div class="btn-group" dropdown>
-          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                  aria-controls="dropdown-basic">
-            Button dropdown <span class="caret"></span>
-          </button>
-          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-              role= "menu" aria-labelledby="button-basic">
-            <li role="menuitem"><a class="d                                                                                       ropdown-item" href="#">Action</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
-            </li>
-          </ul>
-        </div> -->
 
         <!-- we replace currentUer$|async  with-->
         <!-- <form *ngIf="!loggedIn" #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" autocomplete="off" role="search"> -->
